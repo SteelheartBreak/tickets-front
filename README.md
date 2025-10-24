@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TechCorp Tickets — Full Stack Challenge
+A minimal, elegant ticket management system built with Next.js, TypeScript, Auth0, Supabase (PostgreSQL), and Metabase for BI visualization.
 
-## Getting Started
+This project was developed as part of the TechCorp Full Stack Developer Challenge to demonstrate architecture, implementation, and problem-solving skills.
 
-First, run the development server:
+## Overview
+TechCorp Tickets allows authenticated users to view, create, and filter support tickets, update their status, and feed structured data into a BI dashboard built with Metabase.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Tech Stack
+•	Frontend: Next.js 14 (App Router) + TypeScript
+•	Styling: TailwindCSS + shadcn/ui
+•	Authentication: Auth0
+•	Database: Supabase (PostgreSQL)
+•	ORM: Prisma
+•	Hosting: Vercel
+•	BI Dashboard: Metabase
+
+### Features
+✅ Auth0-secured routes
+✅ Ticket list with filters and create modal
+✅ Update status from dropdown
+✅ Elegant, minimalist UI using Tailwind + shadcn/ui
+✅ Responsive design
+
+### Database Schema (Supabase / PostgreSQL)
+```
+CREATE TABLE tickets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  description TEXT,
+  type TEXT NOT NULL,
+  status TEXT NOT NULL,
+  priority TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
+  resolved_at TIMESTAMPTZ
+);
+
+ALTER TABLE tickets 
+ADD COLUMN IF NOT EXISTS external_id TEXT UNIQUE;
+
+CREATE INDEX IF NOT EXISTS idx_tickets_external_id ON tickets(external_id);
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Data Pipeline
+The ingestion pipeline reads a public CSV/JSON source, normalizes data, prevents duplicates via external_id, and can be executed manually or via a Vercel Cron job.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### BI Dashboard (Metabase)
+Metabase connects directly to the same Supabase database. The dashboard includes KPIs such as total tickets, tickets created per day, tickets by type, and average resolution time.
+Dashboard setup and export JSON are detailed in /metabase/README_METABASE.md.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup Instructions
+1. Clone the repository
+•	git clone https://github.com/SteelheartBreak/tickets-front.git
+•	cd tickets-front
+2. Install dependencies
+•	npm install
+3. Configure environment variables (.env.local)
+4. Run locally
+•	npm run dev
+## Deployment
+The app is deployed on Vercel with Auth0 authentication and environment variables configured. Live demo: https://techcorp-tickets.vercel.app
+Technical Decisions
+Auth0 for secure login, Supabase for persistence, Prisma ORM for type-safe DB access, Tailwind + shadcn/ui for elegant UI, and Metabase for analytics.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Author
+Moises — Full Stack Developer (Next.js / TypeScript / BI)
+Email: moisesquin7@gmail.com
+GitHub: https://github.com/SteelheartBreak
