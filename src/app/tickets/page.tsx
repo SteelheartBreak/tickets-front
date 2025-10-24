@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { TicketCard } from '@/components/tickets/TicketCard';
 import { TicketFilters } from '@/components/tickets/TicketFilters';
 import { CreateTicketDialog } from '@/components/tickets/CreateTicketDialog';
@@ -12,11 +12,7 @@ export default function TicketsPage() {
   const [filters, setFilters] = useState<Filters>({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadTickets();
-  }, [filters]);
-
-  const loadTickets = async () => {
+  const loadTickets = useCallback(async () => {
     setLoading(true);
     try {
       const data = await TicketService.getTickets(filters);
@@ -26,14 +22,18 @@ export default function TicketsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    loadTickets();
+  }, [loadTickets]);
 
   return (
     <div className="container mx-auto p-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Tickets</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Tickets</h1>
+          <p className="text-neutral-500 dark:text-neutral-400 mt-1">
             {loading ? 'Loading...' : `${tickets.length} tickets found`}
           </p>
         </div>
@@ -45,9 +45,9 @@ export default function TicketsPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-gray-500">Loading tickets...</div>
+        <div className="text-center py-12 text-neutral-500 dark:text-neutral-400">Loading tickets...</div>
       ) : tickets.length === 0 ? (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-neutral-500 dark:text-neutral-400">
           No tickets found. Create your first ticket!
         </div>
       ) : (

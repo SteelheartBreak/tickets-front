@@ -3,7 +3,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { TICKET_TYPES, TICKET_STATUSES, TICKET_PRIORITIES } from '@/lib/constants';
-import type { TicketFilters as Filters } from '@/types/tickets';
+import type { TicketFilters as Filters, TicketType, TicketStatus, TicketPriority } from '@/types/tickets';
 
 interface TicketFiltersProps {
   filters: Filters;
@@ -16,15 +16,15 @@ export function TicketFilters({ filters, onFilterChange }: TicketFiltersProps) {
   };
 
   return (
-    <div className="flex flex-wrap gap-4 items-center">
+    <div className="flex flex-wrap gap-6 items-center bg-white/60 dark:bg-neutral-900/60 backdrop-blur-sm p-4 rounded-xl border border-neutral-200 dark:border-neutral-800">
       <div className="flex-1 min-w-[200px]">
         <Select
           value={filters.type || 'all'}
-          onValueChange={(value) =>
-            onFilterChange({ ...filters, type: value === 'all' ? undefined : value as any })
+          onValueChange={(value: string) =>
+            onFilterChange({ ...filters, type: value === 'all' ? undefined : (value as TicketType) })
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="rounded-lg border-neutral-300 dark:border-neutral-700">
             <SelectValue placeholder="Filter by type" />
           </SelectTrigger>
           <SelectContent>
@@ -41,11 +41,11 @@ export function TicketFilters({ filters, onFilterChange }: TicketFiltersProps) {
       <div className="flex-1 min-w-[200px]">
         <Select
           value={filters.status || 'all'}
-          onValueChange={(value) =>
-            onFilterChange({ ...filters, status: value === 'all' ? undefined : value as any })
+          onValueChange={(value: string) =>
+            onFilterChange({ ...filters, status: value === 'all' ? undefined : (value as TicketStatus) })
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="rounded-lg border-neutral-300 dark:border-neutral-700">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent>
@@ -62,11 +62,11 @@ export function TicketFilters({ filters, onFilterChange }: TicketFiltersProps) {
       <div className="flex-1 min-w-[200px]">
         <Select
           value={filters.priority || 'all'}
-          onValueChange={(value) =>
-            onFilterChange({ ...filters, priority: value === 'all' ? undefined : value as any })
+          onValueChange={(value: string) =>
+            onFilterChange({ ...filters, priority: value === 'all' ? undefined : (value as TicketPriority) })
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="rounded-lg border-neutral-300 dark:border-neutral-700">
             <SelectValue placeholder="Filter by priority" />
           </SelectTrigger>
           <SelectContent>
@@ -81,7 +81,11 @@ export function TicketFilters({ filters, onFilterChange }: TicketFiltersProps) {
       </div>
 
       {(filters.type || filters.status || filters.priority) && (
-        <Button variant="outline" onClick={handleReset}>
+        <Button
+          variant="outline"
+          onClick={handleReset}
+          className="rounded-lg border-neutral-300 text-neutral-700 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 transition"
+        >
           Clear Filters
         </Button>
       )}

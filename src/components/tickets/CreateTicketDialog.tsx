@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TICKET_TYPES, TICKET_PRIORITIES } from '@/lib/constants';
-import type { CreateTicketInput } from '@/types/tickets';
+import type { CreateTicketInput, TicketType, TicketPriority } from '@/types/tickets';
 
 export function CreateTicketDialog() {
   const router = useRouter();
@@ -105,7 +105,9 @@ export function CreateTicketDialog() {
                 <Label htmlFor="type" className="text-sm text-neutral-700 dark:text-neutral-300">Type *</Label>
                 <Select
                   value={formData.type}
-                  onValueChange={(value) => setFormData({ ...formData, type: value as any })}
+                  onValueChange={(value: string) =>
+                    setFormData({ ...formData, type: value as TicketType })
+                  }
                 >
                   <SelectTrigger className="rounded-lg border-neutral-300 dark:border-neutral-700">
                     <SelectValue />
@@ -124,7 +126,9 @@ export function CreateTicketDialog() {
                 <Label htmlFor="priority" className="text-sm text-neutral-700 dark:text-neutral-300">Priority *</Label>
                 <Select
                   value={formData.priority}
-                  onValueChange={(value) => setFormData({ ...formData, priority: value as any })}
+                  onValueChange={(value: string) =>
+                    setFormData({ ...formData, priority: value as TicketPriority })
+                  }
                 >
                   <SelectTrigger className="rounded-lg border-neutral-300 dark:border-neutral-700">
                     <SelectValue />
