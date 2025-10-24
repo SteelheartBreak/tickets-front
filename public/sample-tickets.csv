@@ -1,0 +1,11 @@
+external_id,title,description,type,status,priority,created_at
+EXT-001,"Mobile app crashes on startup","App crashes immediately after opening on Android 12",bug,open,critical,2024-01-15T10:30:00Z
+EXT-002,"Add multi-language support","Implement i18n for Spanish and Portuguese",feature,open,high,2024-01-16T14:20:00Z
+EXT-003,"Invoice generation fails","PDF invoices are not being generated correctly",bug,in_progress,high,2024-01-17T09:15:00Z
+EXT-004,"How to integrate webhooks?","Need documentation on webhook integration",support,resolved,medium,2024-01-18T11:45:00Z
+EXT-005,"Implement two-factor authentication","Add 2FA support for enhanced security",feature,open,high,2024-01-19T13:00:00Z
+EXT-006,"Database connection timeout","Intermittent database connection timeouts during peak hours",bug,open,critical,2024-01-20T08:30:00Z
+EXT-007,"Add bulk user import","Allow importing users via CSV file",feature,in_progress,medium,2024-01-21T10:00:00Z
+EXT-008,"Reset password link expired","Password reset links expire too quickly",support,closed,low,2024-01-22T15:30:00Z
+EXT-009,"Improve notification system","Make notifications more user-friendly",feature,open,low,2024-01-23T12:00:00Z
+EXT-010,"API documentation outdated","API docs don't match current endpoints",support,in_progress,medium,2024-01-24T09:45:00Z
