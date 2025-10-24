@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 import { Auth0Client } from "@auth0/nextjs-auth0/server";
 
 console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');

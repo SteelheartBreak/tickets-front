@@ -1,5 +1,7 @@
+export const runtime = 'nodejs';
+
 import type { NextRequest } from "next/server";
-import { auth0 } from "./lib/auth0";  // ✅ Ahora es "./lib/auth0" (mismo nivel)
+import { auth0 } from "./lib/auth0";
 
 export async function middleware(request: NextRequest) {
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -15,7 +17,7 @@ export async function middleware(request: NextRequest) {
   } catch (error) {
     console.error('❌ ERROR en auth0.middleware:');
     console.error(error);
-    throw error;
+    return new Response('Internal Server Error (middleware)', { status: 500 });
   }
 }
 
