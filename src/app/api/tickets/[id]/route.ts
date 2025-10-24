@@ -3,10 +3,10 @@ import { TicketService } from '@/services/ticketService';
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = context.params;
+    const { id } = params;
     const body = await req.json();
 
     const ticket = await TicketService.updateTicket(id, body);
