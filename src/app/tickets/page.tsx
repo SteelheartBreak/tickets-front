@@ -1,11 +1,34 @@
+import { auth0 } from '../../lib/auth0';
+import { redirect } from 'next/navigation';
 import { TicketService } from '@/services/ticketService';
 
 export default async function TicketsPage() {
+  // 🔒 Proteger la ruta
+  const session = await auth0.getSession();
+  
+  if (!session) {
+    redirect('/auth/login');
+  }
+
+  const user = session.user;
   const tickets = await TicketService.getTickets();
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Tickets</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Tickets</h1>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-600">
+            {user.name}
+          </span>
+          <a 
+            href="/auth/logout"
+            className="text-sm text-red-600 hover:underline"
+          >
+            Logout
+          </a>
+        </div>
+      </div>
       
       <div className="grid gap-4">
         {tickets.map((ticket) => (
