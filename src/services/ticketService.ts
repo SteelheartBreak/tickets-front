@@ -4,7 +4,7 @@ import type {
   CreateTicketInput, 
   UpdateTicketInput,
   TicketFilters 
-} from '@/types/ticket';
+} from '@/types/tickets';
 
 export class TicketService {
   /**
